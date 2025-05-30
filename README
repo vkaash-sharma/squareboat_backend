@@ -1,0 +1,42 @@
+# 🧑‍💼 Job Application Portal
+
+A full-stack job portal built using **Node.js**, **Express**, and **MongoDB**, where users can register as either **candidates** or **recruiters**, post jobs, and apply for jobs.
+
+---
+
+## 🚀 Features
+
+### 👥 Authentication
+- Signup/Login with role: `candidate` or `recruiter`
+- JWT-based protected routes
+
+### 👨‍💻 Candidates
+- Register with skills
+- View available jobs
+- Apply to jobs with a cover letter
+- Prevent duplicate applications
+- Receive email confirmation on application
+
+### 🧑‍💼 Recruiters
+- Register with company info
+- Post jobs with title, description, skills, location, and salary
+- Get notified on applications
+
+---
+
+## 🛠️ Tech Stack
+
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB + Mongoose
+- **Auth:** JWT
+- **Email Service:** Nodemailer
+- **Environment Variables:** `dotenv`
+
+---
+
+## 📦 Installation
+
+```bash
+git clone https://github.com/your-username/job-portal.git
+cd job-portal
+npm install
