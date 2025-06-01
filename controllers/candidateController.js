@@ -7,7 +7,7 @@ const getAppliedJobs = async (req, res) => {
       .populate('job', 'title description')
       .populate('recruiter', 'firstName lastName company');
     
-    res.status(200).json({
+    return res.status(200).json({
       status: 'success',
       results: applications.length,
       data: { applications },

@@ -7,7 +7,21 @@ const signup = async (req, res) => {
   try {
     const { email, password, userType, firstName, lastName, company, skills } = req.body;
     
+    // Check if user with this email already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({
+        status: 'fail',
+        message: 'User already exists. Please sign in with this email.',
+      });
+    }
     let userData = { email, password, userType, firstName, lastName };
+    if(userType !== 'recruiter' && userType !== 'candidate') {
+      return res.status(400).json({
+        status: 'fail',
+        message: 'Invalid user type. Must be either "recruiter" or "candidate".',
+      });
+    }
     if (userType === 'recruiter') userData.company = company;
     if (userType === 'candidate') userData.skills = skills;
     

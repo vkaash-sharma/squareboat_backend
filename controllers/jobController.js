@@ -6,7 +6,7 @@ const { sendEmail } = require('../config/email');
 const getAllJobs = async (req, res) => {
   try {
     const jobs = await Job.find({ status: 'active' }).populate('recruiter', 'firstName lastName company');
-    res.status(200).json({
+   return res.status(200).json({
       status: 'success',
       results: jobs.length,
       data: { jobs },
@@ -22,6 +22,14 @@ const getAllJobs = async (req, res) => {
 const createJob = async (req, res) => {
   try {
     const { title, description, skillsRequired, location, salaryRange } = req.body;
+
+    // we need to check if the user is a recruiter
+    if (req.user.userType !== 'recruiter') {
+      return res.status(403).json({
+        status: 'fail',
+        message: 'You do not have permission to create a job. Only recruiters can create jobs.',
+      });
+    }
     
     const job = await Job.create({
       title,
@@ -83,11 +91,12 @@ const applyForJob = async (req, res) => {
       message: `Hi ${recruiter.firstName}, you have a new application for ${job.title} from ${candidate.firstName} ${candidate.lastName}`,
     });
     
-    res.status(201).json({
+    return res.status(201).json({
       status: 'success',
       data: { application },
     });
   } catch (err) {
+    console.error(err);
     res.status(400).json({
       status: 'fail',
       message: err.message,
